@@ -1,6 +1,6 @@
 from django.test import TestCase
 from lists.models import Item, List
-
+import os
 
 class HomePageTest(TestCase):
 
@@ -117,3 +117,13 @@ class ListAndItemModelsTest(TestCase):
         self.assertEqual(first_saved_item.list, list_)
         self.assertEqual(second_saved_item.text, 'Item the second')
         self.assertEqual(second_saved_item.list, list_)
+
+
+
+class New VisitorTest(StaticLiveServerTestCase):
+
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
