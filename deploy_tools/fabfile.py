@@ -2,7 +2,7 @@ import random
 from fabric.contrib.files import append, exists
 from fabric.api import cd, env, local, run
 
-REPO_URL = 'https://github.com/ekirked/testing_goat.git'
+REPO_URL = 'https://github.com/hjwp/book-example.git'
 
 
 def deploy():
@@ -12,6 +12,7 @@ def deploy():
         _get_latest_source()
         _update_virtualenv()
         _create_or_update_dotenv()
+        _update_static_files()
         _update_database()
 
 
@@ -40,6 +41,9 @@ def _create_or_update_dotenv():
         ))
         append('.env', f'DJANGO_SECRET_KEY={new_secret}')
 
+
+def _update_static_files():
+    run('./virtualenv/bin/python manage.py collectstatic --noinput')
 
 
 def _update_database():
